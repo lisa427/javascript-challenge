@@ -23,10 +23,23 @@ function showData() {
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
   
-    console.log(inputValue);
-  
+    //console.log(inputValue);
+    
+    // filter the data by the input
     var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
   
-    console.log(filteredData);
+    //console.log(filteredData);
+
+    // Get a reference to the table body
+    var tbody = d3.select("tbody");
+
+    filteredData.forEach((item) => {
+        var row = tbody.append("tr");
+        Object.entries(item).forEach(([key, value]) => {
+          var cell = row.append("td");
+          cell.text(value);
+        });
+    });
+
 
 };
