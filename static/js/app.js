@@ -1,6 +1,18 @@
 // from data.js
 var tableData = data;
 
+// Get a reference to the table body
+var tbody = d3.select("tbody");
+
+// display filtered data in table
+tableData.forEach((item) => {
+    var row = tbody.append("tr");
+    Object.entries(item).forEach(([key, value]) => {
+      var cell = row.append("td");
+      cell.text(value);
+    });
+});
+
 // select the filter button
 var button = d3.select("#filter-btn");
 
@@ -22,17 +34,14 @@ function showData() {
   
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
-  
-    //console.log(inputValue);
     
     // filter the data by the input
     var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
-  
-    //console.log(filteredData);
+    
+    // ENTER SOME CODE TO CLEAR THE TABLE
+    //("#table_of_items tr").remove();
 
-    // Get a reference to the table body
-    var tbody = d3.select("tbody");
-
+    // display filtered data in table
     filteredData.forEach((item) => {
         var row = tbody.append("tr");
         Object.entries(item).forEach(([key, value]) => {
