@@ -39,7 +39,7 @@ function showData() {
     var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
     
     // ENTER SOME CODE TO CLEAR THE TABLE
-    //("#table_of_items tr").remove();
+    document.getElementById("table-body").innerHTML = null;
 
     // display filtered data in table
     filteredData.forEach((item) => {
