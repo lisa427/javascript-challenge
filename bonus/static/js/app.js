@@ -20,6 +20,46 @@ const allData = function() {
     });
 };
 
+// /**
+//  * Filters an array of objects using custom predicates.
+//  *
+//  * @param  {Array}  array: the array to filter
+//  * @param  {Object} filters: an object with the filter criteria
+//  * @return {Array}
+//  */
+// function filterArray(array, filters) {
+//   const filterKeys = Object.keys(filters);
+//   return array.filter(item => {
+//     // validates all filter criteria
+//     return filterKeys.every(key => {
+//       // ignores non-function predicates
+//       if (typeof filters[key] !== 'function') return true;
+//       return filters[key](item[key]);
+//     });
+//   });
+// }
+
+/**
+ * Filters an array of objects (one level-depth) with multiple criteria.
+ *
+ * @param  {Array}  array: the array to filter
+ * @param  {Object} filters: an object with the filter criteria
+ * @return {Array}
+ */
+const filterPlainArray = function(array, filters) {
+  const filterKeys = Object.keys(filters);
+  console.log(filterKeys);
+  return array.filter(item => {
+    // validates all filter criteria
+    return filterKeys.every(key => {
+      // ignores an empty filter
+      if (!filters[key].length) return true;
+      return filters[key].find(filter => filter === item[key]);
+    });
+  });
+}
+
+
 // function to display filtered data
 const filterData = function() {
 
@@ -45,34 +85,42 @@ const filterData = function() {
     //can't get it to work properly even when all keys have values
 
     let filterObject = {
-      date: inputDate.property("value"),
-      city: inputCity.property("value").toLowerCase(),
-      state: inputState.property("value").toLowerCase(),
-      country: inputCountry.property("value").toLowerCase(),
-      shape: inputShape.property("value").toLowerCase()
+      datetime: [inputDate.property("value")],
+      city: [inputCity.property("value").toLowerCase()],
+      state: [inputState.property("value").toLowerCase()],
+      country: [inputCountry.property("value").toLowerCase()],
+      shape: [inputShape.property("value").toLowerCase()]
     };
 
-    function filterUsers(tableData, filterObject) {
-      //Loop through all key-value pairs in filtersObject
-      Object.keys(filterObject).forEach(function(key) {
-        //Loop through users array checking each userObject
-        results = tableData.filter(function(userObject) {
-          //If userObject's key:value is same as filtersObject's key:value, they stay in users array
-          return userObject[key] === filterObject[key]
-        })
-      });
-      return results;
-    };
+    let filteredData = filterPlainArray(tableData, filterObject);
 
-        //let filteredData = filterUsers(tableData, filterObject);
+    // let filteredData = tableData.filter(function(d) {
+    //   return filterObject.every(function(c) {
+    //     return c(d);
+    //   });
+    // });
 
-    let filteredData = tableData.filter(function(item) {
-      for (var key in filterObject) {
-        if (item[key] === undefined || item[key] != filterObject[key])
-          return false;
-      }
-      return true;
-    });
+    // function filterUsers(tableData, filterObject) {
+    //   //Loop through all key-value pairs in filtersObject
+    //   Object.keys(filterObject).forEach(function(key) {
+    //     //Loop through users array checking each userObject
+    //     results = tableData.filter(function(userObject) {
+    //       //If userObject's key:value is same as filtersObject's key:value, they stay in users array
+    //       return userObject[key] === filterObject[key]
+    //     })
+    //   });
+    //   return results;
+    // };
+
+    //     //let filteredData = filterUsers(tableData, filterObject);
+
+    // let filteredData = tableData.filter(function(item) {
+    //   for (var key in filterObject) {
+    //     if (item[key] === undefined || item[key] != filterObject[key])
+    //       return false;
+    //   }
+    //   return true;
+    // });
     
      
     
