@@ -48,7 +48,6 @@ const allData = function() {
  */
 const filterPlainArray = function(array, filters) {
   const filterKeys = Object.keys(filters);
-  console.log(filterKeys);
   return array.filter(item => {
     // validates all filter criteria
     return filterKeys.every(key => {
@@ -80,16 +79,19 @@ const filterData = function() {
     //let inputCountryValue = inputCountry.property("value").toLowerCase();
     //let inputShapeValue = inputShape.property("value").toLowerCase();
 
-    //attempting to get filter to work even if some filters are left empty
-    //maybe drop keys from this if their value is empty?
-    //can't get it to work properly even when all keys have values
-
+    // gather value properties of input into one object
     let filterObject = {
       datetime: [inputDate.property("value")],
       city: [inputCity.property("value").toLowerCase()],
       state: [inputState.property("value").toLowerCase()],
       country: [inputCountry.property("value").toLowerCase()],
       shape: [inputShape.property("value").toLowerCase()]
+    };
+
+    for (let item in filterObject) {
+      if (filterObject[item] == "") {
+        delete(filterObject[item]);
+      };
     };
 
     let filteredData = filterPlainArray(tableData, filterObject);
