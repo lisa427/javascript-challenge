@@ -10,7 +10,7 @@
 
 * Another index.html file was created in the bonus folder.
 
-* This website has 5 possible filters.  All 5 filters can be filled out at once, or some can be left blank if the user only wants to filter on some of the criteria.  (If only 2 filters are filled out and the others left blank, the data will be filtered on just those 2 criteria).
+* This website has 5 possible filters.  All 5 filters can be filled out at once, or some can be left blank if the user only wants to filter on some of the criteria.  (For example, if only 2 filters are filled out and the others left blank, the data will be filtered on just those 2 criteria).
 
 * A table will be rendered to show the filtered data.
 
