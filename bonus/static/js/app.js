@@ -10,6 +10,13 @@ const allData = function() {
     // clear table
     document.getElementById("table-body").innerHTML = null;
 
+    // clear the input boxes
+    d3.select("#datetime").node().value = "";
+    d3.select("#city").node().value = "";
+    d3.select("#state").node().value = "";
+    d3.select("#country").node().value = "";
+    d3.select("#shape").node().value = "";
+
     // display all data in a table
     tableData.forEach((item) => {
         let row = tbody.append("tr");
@@ -18,26 +25,7 @@ const allData = function() {
           cell.text(value);
         });
     });
-};
-
-// /**
-//  * Filters an array of objects using custom predicates.
-//  *
-//  * @param  {Array}  array: the array to filter
-//  * @param  {Object} filters: an object with the filter criteria
-//  * @return {Array}
-//  */
-// function filterArray(array, filters) {
-//   const filterKeys = Object.keys(filters);
-//   return array.filter(item => {
-//     // validates all filter criteria
-//     return filterKeys.every(key => {
-//       // ignores non-function predicates
-//       if (typeof filters[key] !== 'function') return true;
-//       return filters[key](item[key]);
-//     });
-//   });
-// }
+}
 
 /**
  * Filters an array of objects (one level-depth) with multiple criteria.
@@ -46,7 +34,7 @@ const allData = function() {
  * @param  {Object} filters: an object with the filter criteria
  * @return {Array}
  */
-const filterPlainArray = function(array, filters) {
+const filterArray = function(array, filters) {
   const filterKeys = Object.keys(filters);
   return array.filter(item => {
     // validates all filter criteria
@@ -57,7 +45,6 @@ const filterPlainArray = function(array, filters) {
     });
   });
 }
-
 
 // function to display filtered data
 const filterData = function() {
@@ -72,13 +59,6 @@ const filterData = function() {
     let inputCountry = d3.select("#country");
     let inputShape = d3.select("#shape");
   
-    // Get the value property of the input element
-    //let inputDateValue = inputDate.property("value");
-    //let inputCityValue = inputCity.property("value").toLowerCase();
-    //let inputStateValue = inputState.property("value").toLowerCase();
-    //let inputCountryValue = inputCountry.property("value").toLowerCase();
-    //let inputShapeValue = inputShape.property("value").toLowerCase();
-
     // gather value properties of input into one object
     let filterObject = {
       datetime: [inputDate.property("value")],
@@ -88,48 +68,17 @@ const filterData = function() {
       shape: [inputShape.property("value").toLowerCase()]
     };
 
+    // loop through object and delete properties without values
     for (let item in filterObject) {
       if (filterObject[item] == "") {
         delete(filterObject[item]);
       };
     };
 
-    let filteredData = filterPlainArray(tableData, filterObject);
+    // filter data by calling function
+    // pass data array & object with filter values
+    let filteredData = filterArray(tableData, filterObject);
 
-    // let filteredData = tableData.filter(function(d) {
-    //   return filterObject.every(function(c) {
-    //     return c(d);
-    //   });
-    // });
-
-    // function filterUsers(tableData, filterObject) {
-    //   //Loop through all key-value pairs in filtersObject
-    //   Object.keys(filterObject).forEach(function(key) {
-    //     //Loop through users array checking each userObject
-    //     results = tableData.filter(function(userObject) {
-    //       //If userObject's key:value is same as filtersObject's key:value, they stay in users array
-    //       return userObject[key] === filterObject[key]
-    //     })
-    //   });
-    //   return results;
-    // };
-
-    //     //let filteredData = filterUsers(tableData, filterObject);
-
-    // let filteredData = tableData.filter(function(item) {
-    //   for (var key in filterObject) {
-    //     if (item[key] === undefined || item[key] != filterObject[key])
-    //       return false;
-    //   }
-    //   return true;
-    // });
-    
-     
-    
-    // filter the data by the input
-    //let filteredData = tableData.filter(sighting => sighting.datetime === inputDateValue
-      //&& sighting.city === inputCityValue);
-    
     // clear the table before displaying filtered data
     document.getElementById("table-body").innerHTML = null;
 
@@ -141,13 +90,7 @@ const filterData = function() {
           cell.text(value);
         });
     });
-
-    console.log(filteredData);
-    console.log(filterObject);
-    //console.log(inputDateValue);
-    //console.log(inputCityValue);
-
-};
+}
 
 // call function to display all data in table
 allData();

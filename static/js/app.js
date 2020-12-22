@@ -10,6 +10,9 @@ const allData = function() {
     // clear table
     document.getElementById("table-body").innerHTML = null;
 
+    // clear the input box
+    d3.select("#datetime").node().value = "";
+
     // display all data in a table
     tableData.forEach((item) => {
         let row = tbody.append("tr");
